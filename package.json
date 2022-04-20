@@ -1,0 +1,16 @@
+{
+  "name": "dialog-gui",
+  "version": "1.0.0",
+  "description": "Responsive dialoges for nodejs using zenity",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js",
+    "install": "node mirror.js"
+  },
+  "keywords": [],
+  "author": "Snurf69",
+  "license": "ISC",
+  "devDependencies": {
+    "jsdoc": "^3.6.10"
+  }
+}
