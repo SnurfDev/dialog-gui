@@ -1,5 +1,6 @@
-# Dialog-GUI
 ![npm](https://img.shields.io/npm/v/dialog-gui)
+# Dialog-GUI
+
 This is a simple gui system designed for use on desktop devices.
 It is based on zenity and allows you to display:
 - Forms (with entries, password fields, calendars, [~~lists~~](https://static.snurf08.de/dialog-gui/Dialog.html#list),combo boxes)
