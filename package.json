@@ -12,5 +12,9 @@
   "license": "ISC",
   "devDependencies": {
     "jsdoc": "^3.6.10"
+  },
+  "repository": {
+    "url": "https://github.com/Snurf08/dialog-gui",
+    "type": "git"
   }
 }
