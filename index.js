@@ -334,6 +334,8 @@ class Dialog {
      */
     static list(title,text,values,headers,options) {
         var cmd = [zenityBin,"--list"];
+        cmd.push(`--text="${text||"text"}"`);
+        cmd.push(`--title="${title||"title"}"`);
         if(options) {
             if(options.height) cmd.push(`--height="${options.height}"`);
             if(options.width) cmd.push(`--width="${options.width}"`);

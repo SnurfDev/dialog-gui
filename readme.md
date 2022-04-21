@@ -21,7 +21,7 @@ on linux, and installs zenity with it (A passwords field may pop up during the i
 package by [ncruces](https://github.com/ncruces). It currently lacks functionallity for forms (the Dialog class) but
 everything else works fine.
 ## Examples
-Look at test.js for an example on how to use this package.
+Look at the examples folder for examples on how to use this package.
 
 ## Docs
 You can find the class documentation here: [Docs](https://static.snurf08.de/dialog-gui/Dialog.html)
