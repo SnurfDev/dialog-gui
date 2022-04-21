@@ -4,9 +4,14 @@
   "description": "Responsive dialoges for nodejs using zenity",
   "main": "index.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "install": "node installer.js"
   },
-  "keywords": ["zenity","gui","desktop"],
+  "keywords": [
+    "zenity",
+    "gui",
+    "desktop"
+  ],
   "author": "Snurf69",
   "license": "ISC",
   "devDependencies": {
@@ -15,5 +20,8 @@
   "repository": {
     "url": "https://github.com/Snurf08/dialog-gui",
     "type": "git"
+  },
+  "dependencies": {
+    "jszip": "^3.9.1"
   }
 }

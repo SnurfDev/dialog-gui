@@ -3,7 +3,7 @@
 
 This is a simple gui system designed for use on desktop devices.
 It is based on zenity and allows you to display:
-- Forms (with entries, password fields, calendars, [~~lists~~](https://static.snurf08.de/dialog-gui/Dialog.html#list),combo boxes)
+- Forms (with entries, password fields, calendars, [~~lists~~](https://static.snurf08.de/dialog-gui/Dialog.html#list),combo boxes) [DOES NOT WORK ON WINDOWS/MACOS]
 - Notifications
 - File selectors
 - Info/Error/Question boxes
@@ -13,21 +13,18 @@ It is based on zenity and allows you to display:
 - Lists
 
 ## Installation
-On linux you simply have to install the "zenity" package
-using your favourite package manager.
-For example using apt:
-`apt install zenity`
+You simply have to install the package using:
+`npm i dialog-gui`
 
-Windows and mac users will have to download the zenity
-binaries somewhere else. The best project I could find
-is [https://github.com/ncruces/zenity](https://github.com/ncruces/zenity) by ncruces.
-Simplay download the binary and drop it in the 
-node_modules/dialog-gui/ folder. With this version,
-the Dialog class wont work, everything else (ex. Dialog.info())
-should work though.
-
+Then the package will automatically run an install script which automatically detects your package manager 
+on linux, and installs zenity with it (A passwords field may pop up during the installation). If you are on windows / mac, it will download the [Zenity](https://github.com/ncruces/zenity)
+package by [ncruces](https://github.com/ncruces). It currently lacks functionallity for forms (the Dialog class) but
+everything else works fine.
 ## Examples
 Look at test.js for an example on how to use this package.
 
 ## Docs
 You can find the class documentation here: [Docs](https://static.snurf08.de/dialog-gui/Dialog.html)
+
+## Credits
+Thanks to [ncruces](https://github.com/ncruces) for supplying the Zenity package to windows and mac users.

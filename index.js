@@ -1,6 +1,7 @@
 var child_process = require("child_process");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 const { platform } = require("os");
 
 const zenityBin = fs.existsSync(platform()=="win32"?"zenity.exe":"zenity")?platform()=="win32"?".\\zenity.exe":"./zenity":"zenity";
@@ -64,6 +65,7 @@ class Dialog {
      * @param {WindowOptions} [options] 
      */
     constructor(title,options) {
+        if(os.platform()!=="linux") throw new Error("The Dialog class is currently not supported on operating systems other than linux. Static fields work though.")
         this.command.push(`--title="${title}"`);
 
         if(options) {
