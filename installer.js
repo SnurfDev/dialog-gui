@@ -1,7 +1,7 @@
 const os = require("os");
 const child_process = require("child_process");
 const zip = require("jszip");
-const https = require("https");
+const axios = new (require("axios").Axios)({});
 const fs = require("fs")
 
 const package = require("./package.json");
@@ -19,23 +19,16 @@ function run(cmd) {
 /**
  * 
  * @param {String} url 
- * @returns {Promise<Buffer>}
+ * @returns {Promise<ArrayBuffer>}
  */
 function download(url) {
     return new Promise((res,rej)=>{
-        https.get(url,{headers:{"User-Agent":`${package.name}/${package.version} ${package.description}`}},resp=>{
-            var data = [];
-            resp.on("data",d=>{
-                data.push(d);
-            })
-            resp.on("end",()=>{
-                var buffer = Buffer.concat(data);
-                res(buffer);
-            })
-            resp.on("error",rej)
-        });
+        axios.get(url,{responseType:"arraybuffer"})
+            .then(r=>res(r.data))
+            .catch(rej)
     })
 }
+
 switch(os.platform()) {
     case "linux": {
         var zenityExists = run("/usr/bin/which zenity") !== "";
@@ -64,12 +57,11 @@ switch(os.platform()) {
     }
     case "win32":
     case "darwin":{
-        var name = `zenity_${os.platform()=="win32"?(os.arch()=="x64"?"win64":"win32"):"macos"}.zip`;
+        var name = `zenity_${(os.platform()=="win32")?(os.arch()=="x64"?"win64":"win32"):"macos"}.zip`;
         var filename = os.platform()=="win32"?"zenity.exe":"zenity";
-        
         download("https://api.github.com/repos/ncruces/zenity/releases/latest").then(releases=>{
-            var data = JSON.parse(releases.toString());
-            var url = data.assets.some(v=>v.name==name);
+            var url = JSON.parse(Buffer.from(releases).toString()).assets.find(v=>v.name==name).browser_download_url;
+            console.log("Downloading zenity from: "+url)
             download(url).then(zipFile=>{
                 zip.loadAsync(zipFile).then(unzipped=>{
                     unzipped.files[filename].nodeStream().pipe(fs.createWriteStream(filename));
