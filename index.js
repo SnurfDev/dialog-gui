@@ -4,7 +4,7 @@ const fs = require("fs");
 const os = require("os");
 const { platform } = require("os");
 
-const zenityBin = fs.existsSync(platform()=="win32"?"zenity.exe":"zenity")?platform()=="win32"?".\\zenity.exe":"./zenity":"zenity";
+const zenityBin = fs.existsSync(path.join(__dirname,platform()=="win32"?"zenity.exe":"zenity"))?((platform()=="win32")?".\\zenity.exe":"./zenity"):"zenity";
 
 function run(cmd) {
     var out = "";
