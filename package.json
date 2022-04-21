@@ -1,6 +1,6 @@
 {
   "name": "dialog-gui",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Responsive dialoges for nodejs using zenity",
   "main": "index.js",
   "scripts": {
