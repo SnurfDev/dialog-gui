@@ -155,7 +155,7 @@ class Dialog {
     combo(id,name,values) {
         this.returnForms.push(id);
         this.command.push(`--add-combo="${name||"combo"}"`);
-        this.command.push(`--combo-values="${values?.join("|")||"combo_value"}"`);
+        this.command.push(`--combo-values="${values?values.join("|"):"combo_value"}"`);
         return this;
     }
 
