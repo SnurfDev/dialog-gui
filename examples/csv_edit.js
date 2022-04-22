@@ -20,7 +20,6 @@ function run() {
     //Show start dialog
     var startDiag = Dialog.list("Action","Select action",["New File","Load File"],["Action"])
     if(startDiag===null) return;
-
     
     //Get seperator
     var seperator = Dialog.entry("Input the CSV seperator character","Seperator",",");
@@ -39,14 +38,8 @@ function run() {
 
     }else{
         //Get csv size dialog
-        var sizeDiag = new Dialog("Select Size")
-            .entry("width","Columns")
-            .entry("height","Rows")
-            .show();
-        if(!sizeDiag) return;
-        //Parse width and height
-        width = parseInt(sizeDiag.width);
-        height = parseInt(sizeDiag.height);
+        width = parseInt(Dialog.entry("Width","Size","5"));
+        height = parseInt(Dialog.entry("Height","Size","4"));
         if(width===NaN||height===NaN) {Dialog.info("The width or height inputed are invalid","Error","error");return run()}
 
         //Create empty table
@@ -66,16 +59,10 @@ function run() {
         if(selected===null) break;
 
         //Get selected column
-        var squareSelector = new Dialog("Select column")
-            .combo(
-                "col",
-                "Column",
-                new Array(csv[selected].length).fill().map((_,i)=>String.fromCharCode(65+i))
-            )
-            .show();
+        var squareSelector = Dialog.list("Select Square","Select Square to Edit.",new Array(width+1).fill().map((_,i)=>String.fromCharCode(65+i)),["Column"])
         //Edit selected column
         if(squareSelector!==null) {
-            var idx = squareSelector.col.charCodeAt()-65;
+            var idx = squareSelector;
             csv[selected][idx] = Dialog.entry(`Edit ${squareSelector.col}${selected}:`,"Field editor",csv[selected][idx]);
         }
     }

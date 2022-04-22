@@ -177,7 +177,7 @@ class Dialog {
 
         if(ret.endsWith("\n")) {
             var retobj = {};
-            ret.slice(0,ret.length-1).split("|").forEach((value,i)=>{
+            ret.slice(0,(os.platform()=="win32")?out.length-2:out.length-1).split("|").forEach((value,i)=>{
                 var id = this.returnForms[i];
                 retobj[id] = value;
             });
@@ -195,7 +195,7 @@ class Dialog {
 
         if(ret.endsWith("\n")) {
             var retobj = {};
-            ret.slice(0,ret.length-1).split("|").forEach((value,i)=>{
+            ret.slice(0,(os.platform()=="win32")?out.length-2:out.length-1).split("|").forEach((value,i)=>{
                 var id = this.returnForms[i];
                 retobj[id] = value;
             });
@@ -223,7 +223,7 @@ class Dialog {
         if(multiple) cmd.push("--multiple");
         if(save) cmd.push("--save",`--filename="${save}"`,"--confirm-overwrite");
         var out = run(cmd.join(" "));
-        return out.slice(0,out.length-1);
+        return out.slice(0,(os.platform=="win32")?out.length-2:out.length-1);
     }
 
     /**
@@ -266,7 +266,7 @@ class Dialog {
         cmd.push(`--title="${title||"title"}"`);
         if(placeholder) cmd.push(`--entry-text="${placeholder}"`)
         var out = run(cmd.join(" "));
-        return out?out.slice(0,out.length-1):placeholder;
+        return out?out.slice(0,(os.platform()=="win32")?out.length-2:out.length-1):placeholder;
     }
 
     /**
@@ -322,7 +322,7 @@ class Dialog {
                 hex = "0x" + (0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1);
             }
             return hex;
-        })(out.slice(0,out.length-1));
+        })(out.slice(0,(os.platform=="win32")?out.length-2:out.length-1));
     }
     /**
      * 
@@ -333,6 +333,7 @@ class Dialog {
      * @param {WindowOptions} [options] 
      */
     static list(title,text,values,headers,options) {
+        var platform = os.platform();
         var cmd = [zenityBin,"--list"];
         cmd.push(`--text="${text||"text"}"`);
         cmd.push(`--title="${title||"title"}"`);
@@ -346,7 +347,12 @@ class Dialog {
         var listvals = [];
         var columns = values[values.length-1].join?values[values.length-1].length:null;
         if(columns) {
-            listvals = values.reduce((p,c)=>{c.forEach(v=>p.push(v));return p},[]);
+            if(platform=="linux") {
+                listvals = values.reduce((p,c)=>{c.forEach(v=>p.push(v));return p},[]);
+            }else{
+                listvals = values.map(v=>v.join("  "));
+            }
+            
         }else{
             listvals = values;
         }
@@ -354,11 +360,17 @@ class Dialog {
         if(!headers) {
             headers = new Array(columns).fill(`" "`);
         }
-        cmd.push(...headers.map(v=>`--column="${v}"`));
+        if(platform=="linux") {
+            cmd.push(...headers.map(v=>`--column="${v}"`));
+        }else{
+            cmd.push(`--column="${headers.join("  ")}"`);
+            listvals.unshift(headers.join("  "))
+        }
+        
         cmd.push(...listvals.map(v=>`"${v}"`));
         var out = run(cmd.join(" "));
         if(!out) return null;
-        return listvals.indexOf(out.slice(0,out.length-1))/columns;
+        return (listvals.indexOf(out.slice(0,(platform=="win32")?out.length-2:out.length-1))/((platform=="linux")?columns:1))-((platform=="linux")?0:1);
     }
 }
 
