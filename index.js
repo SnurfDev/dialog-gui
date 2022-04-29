@@ -275,6 +275,26 @@ class Dialog {
      * @param {String} title 
      * @param {WindowOptions} [options] 
      */
+    static password(text,title,options) {
+        var cmd = [zenityBin,`--password`];
+        if(options) {
+            if(options.height) cmd.push(`--height="${options.height}"`);
+            if(options.width) cmd.push(`--width="${options.width}"`);
+            if(options.icon) cmd.push(`--window-icon="${options.icon}"`);
+            if(options.parent) cmd.push(`--attach="${options.parent}"`);
+        }
+        cmd.push(`--text="${text||"text"}"`);
+        cmd.push(`--title="${title||"title"}"`);
+        var out = run(cmd.join(" "));
+        return out?out.slice(0,(os.platform()=="win32")?out.length-2:out.length-1):placeholder;
+    }
+
+    /**
+     * 
+     * @param {String} text 
+     * @param {String} title 
+     * @param {WindowOptions} [options] 
+     */
     static progress(text,title,options) {
         var cmd = [];
         if(options) {
