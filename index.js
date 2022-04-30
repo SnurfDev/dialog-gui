@@ -177,7 +177,7 @@ class Dialog {
 
         if(ret.endsWith("\n")) {
             var retobj = {};
-            ret.slice(0,(os.platform()=="win32")?out.length-2:out.length-1).split("|").forEach((value,i)=>{
+            ret.slice(0,(os.platform()=="win32")?ret.length-2:ret.length-1).split("|").forEach((value,i)=>{
                 var id = this.returnForms[i];
                 retobj[id] = value;
             });
@@ -195,7 +195,7 @@ class Dialog {
 
         if(ret.endsWith("\n")) {
             var retobj = {};
-            ret.slice(0,(os.platform()=="win32")?out.length-2:out.length-1).split("|").forEach((value,i)=>{
+            ret.slice(0,(os.platform()=="win32")?ret.length-2:ret.length-1).split("|").forEach((value,i)=>{
                 var id = this.returnForms[i];
                 retobj[id] = value;
             });
