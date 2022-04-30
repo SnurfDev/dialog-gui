@@ -286,7 +286,7 @@ class Dialog {
         cmd.push(`--text="${text||"text"}"`);
         cmd.push(`--title="${title||"title"}"`);
         var out = run(cmd.join(" "));
-        return out?out.slice(0,(os.platform()=="win32")?out.length-2:out.length-1):placeholder;
+        return out?out.slice(0,(os.platform()=="win32")?out.length-2:out.length-1):null;
     }
 
     /**
