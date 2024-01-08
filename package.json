@@ -22,7 +22,7 @@
     "type": "git"
   },
   "dependencies": {
-    "axios": "^0.27.2",
+    "axios": "^1.6.5",
     "jszip": "^3.9.1"
   }
 }
